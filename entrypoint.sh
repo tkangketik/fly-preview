@@ -125,4 +125,13 @@ while [[ "$MACHINE_STATE" != "started" ]]; do
 done
 
 # Finalizing
-fly ssh console -C 'bash -c "cd /var/www/html && mkdir -p storage/logs && mkdir -p storage/app/public && mkdir -p storage/debugbar && mkdir -p storage/framework/cache/data && mkdir -p storage/framework/sessions && mkdir -p storage/framework/testing && mkdir -p storage/framework/views && chmod 777 -R /var/www/html/storage/*"' --config "$CONFIG" --app "$APP"
+fly ssh console -C 'bash -c "cd /var/www/html && \
+    test ! -d storage/logs && mkdir -p storage/logs && \
+    test ! -d storage/app/public && mkdir -p storage/app/public && \
+    test ! -d storage/debugbar && mkdir -p storage/debugbar && \
+    test ! -d storage/framework/cache/data && mkdir -p storage/framework/cache/data && \
+    test ! -d storage/framework/sessions && mkdir -p storage/framework/sessions && \
+    test ! -d storage/framework/testing && mkdir -p storage/framework/testing && \
+    test ! -d storage/framework/views && mkdir -p storage/framework/views && \
+    chmod 777 -R /var/www/html/storage/*"' \
+    --config "$CONFIG" --app "$APP"
