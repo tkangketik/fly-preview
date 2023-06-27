@@ -1,0 +1,31 @@
+name: "Pull Request Review Apps on Fly.io"
+description: "Deploy and Destroy Pull Request Review on Fly.io. Resources like databases and volumes are also created, if needed, and destroyed"
+author: Fly
+branding:
+  icon: "upload-cloud"
+  color: "purple"
+runs:
+  using: "docker"
+  image: "Dockerfile"
+inputs:
+  name:
+    description: Fly app name
+  image:
+    description: Optional pre-existing Docker image to use
+  config:
+    description: App's config file (fly.toml).
+  region:
+    description: Region to launch the app in (alternatively, set the env FLY_REGION)
+  org:
+    description: Organization to launch the app in (alternatively, set the env FLY_ORG)
+  path:
+    description: Path to a directory containing a fly.toml to clone. Defaults to root path.
+  update:
+    description: Whether new commits to the PR should re-deploy the Fly app. Defaults to true.
+    default: true
+  secrets:
+    description: Secrets to be set on the app. Separate multiple secrets with a space.
+  vm:
+    description: Changes the type of the VM. Defaults to shared-cpu-1x.
+  vm_memory:
+    description: Adjusts VM's memory. Default to 256.
