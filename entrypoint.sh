@@ -64,7 +64,6 @@ fi
 if ! flyctl status --app "$APP"; then
   flyctl apps create "$APP" --org "$ORG"
   flyctl regions set "$REGION" --app "$APP" -y
-  flyctl scale vm "$VM" --memory "$VM_MEMORY" --app "$APP"
 
   # look for "migrate" file in the app files
   # if it exists, the app probably needs DB.
@@ -103,7 +102,7 @@ if [ -n "$INPUT_SECRETS" ]; then
 fi
 
 # Deploy the app.
-flyctl deploy --config "$CONFIG" --app "$APP" --region "$REGION" --remote-only --strategy immediate
+flyctl deploy --config "$CONFIG" --app "$APP" --region "$REGION" --remote-only --strategy immediate --vm-memory "$VM_MEMORY" --vm-size "$VM"
 
 # Make some info available to the GitHub workflow.
 flyctl status --app "$APP" --json >status.json
