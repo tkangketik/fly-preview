@@ -118,7 +118,7 @@ echo "machine_state=$MACHINE_STATE" >>$GITHUB_OUTPUT
 echo "Waiting for machine state to be started..."
 while [[ "$MACHINE_STATE" != "started" ]]; do
     echo -n "."
-    sleep 1
+    sleep 5
     flyctl status --app "$APP" --json >status.json
     MACHINE_STATE=$(jq -r '.Machines[].state' status.json)
 done
