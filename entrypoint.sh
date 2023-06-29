@@ -116,21 +116,11 @@ echo "name=$APP" >>$GITHUB_OUTPUT
 echo "machine_state=$MACHINE_STATE" >>$GITHUB_OUTPUT
 
 # Wait for machine state to be "started"
-# while [[ "$MACHINE_STATE" != "started" ]]; do
-#     echo "Waiting for machine state to be 'started'..."
-#     sleep 10
-#     flyctl status --app "$APP" --json >status.json
-#     MACHINE_STATE=$(jq -r '.Machines[].state' status.json)
-# done
-
-# Finalizing
-# fly ssh console -C 'bash -c "cd /var/www/html && \
-#     test ! -d storage/logs && mkdir -p storage/logs && \
-#     test ! -d storage/app/public && mkdir -p storage/app/public && \
-#     test ! -d storage/debugbar && mkdir -p storage/debugbar && \
-#     test ! -d storage/framework/cache/data && mkdir -p storage/framework/cache/data && \
-#     test ! -d storage/framework/sessions && mkdir -p storage/framework/sessions && \
-#     test ! -d storage/framework/testing && mkdir -p storage/framework/testing && \
-#     test ! -d storage/framework/views && mkdir -p storage/framework/views && \
-#     chmod 777 -R /var/www/html/storage/*"' \
-#     --config "$CONFIG" --app "$APP"
+echo "Waiting for machine state to be started..."
+while [[ "$MACHINE_STATE" != "started" ]]; do
+    echo -n "."
+    sleep 1
+    flyctl status --app "$APP" --json >status.json
+    MACHINE_STATE=$(jq -r '.Machines[].state' status.json)
+done
+echo -e "\nMachine is now started."
