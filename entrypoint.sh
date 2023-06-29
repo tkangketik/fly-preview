@@ -112,7 +112,6 @@ MACHINE_STATE=$(jq -r '.Machines[].state' status.json)
 echo "hostname=$HOSTNAME" >>$GITHUB_OUTPUT
 echo "url=https://$HOSTNAME" >>$GITHUB_OUTPUT
 echo "id=$APPID" >>$GITHUB_OUTPUT
-echo "name=$APP" >>$GITHUB_OUTPUT
 echo "machine_state=$MACHINE_STATE" >>$GITHUB_OUTPUT
 
 # Wait for machine state to be "started"
